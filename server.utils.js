@@ -20,7 +20,9 @@ module.exports = class ChatServer extends http.Server {
    */
   constructor(name, app, port) {
     super(app);
+
     this.name = name;
+    this.InitialiseDebugMsg();
     this.port = normalizePort(process.env.PORT || port);
     app.set("port", port);
 
@@ -49,7 +51,7 @@ module.exports = class ChatServer extends http.Server {
       const address = super.address();
       const bind =
         typeof address === "string" ? "pipe " + address : "port " + port;
-      this.log("Socket server listening on " + bind);
+      this.log(name + " server listening on " + bind);
     });
   }
 
@@ -57,15 +59,30 @@ module.exports = class ChatServer extends http.Server {
       super.listen(this.port);
   }
 
-  log(...logs) {
-    console.log("[" + this.name + "]-", ...logs);
+  InitialiseDebugMsg() {
+    console.oldLog = console.log;
+    console.oldError = console.error;
+    console.oldWarn = console.warn;
+    
+    let channelName = this.name;
+
+    console.log = (...logs) => this.log(...logs);
+    console.warn = (...warn) => this.warn(...warn);
+    // console.error = this.error;
   }
 
-  error(...error) {
-    console.error("[" + this.name + "]-", ...error);
+  log(...logs) {
+    console.oldLog("["+this.name+"]",...logs)
   }
 
   warn(...warn) {
-    console.warn("[" + this.name + "]-", ...warn);
+    console.oldWarn('['+this.name+"]", ...warn)
   }
+
+  error(...err) {
+    console.oldError('['+this.name+"]", ...err)
+  }
+
+
+
 };
