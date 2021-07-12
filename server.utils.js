@@ -68,7 +68,7 @@ module.exports = class ChatServer extends http.Server {
 
     console.log = (...logs) => this.log(...logs);
     console.warn = (...warn) => this.warn(...warn);
-    // console.error = this.error;
+    console.error = (...err) => this.error(...err);
   }
 
   log(...logs) {
@@ -82,7 +82,4 @@ module.exports = class ChatServer extends http.Server {
   error(...err) {
     console.oldError('['+this.name+"]", ...err)
   }
-
-
-
 };
