@@ -1,0 +1,12 @@
+{
+  "name": "chat-utils",
+  "version": "1.0.0",
+  "description": "Some utils files to use with chat-server project",
+  "main": "server.utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "remiCzn",
+  "license": "MIT",
+  "dependencies": {}
+}
